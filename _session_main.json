@@ -1,0 +1,12 @@
+﻿{
+    "tag":  "main",
+    "session_id":  "45951fd7-de3e-4666-8a00-476b28513c34",
+    "jsonl":  "C:\\Users\\lacsa\\.claude\\projects\\D--work-document-go-data-bug169-repo\\45951fd7-de3e-4666-8a00-476b28513c34.jsonl",
+    "exit_code":  {
+                      "value":  0,
+                      "PSComputerName":  "localhost",
+                      "RunspaceId":  "e0edefd3-8819-4ba4-9ea2-376c0106dcbb",
+                      "PSShowComputerName":  false
+                  },
+    "out":  "D:\\work\\document\\go-data\\bug169\\repo\\_claude_main.out.txt"
+}

@@ -46,7 +46,21 @@ func ExportImageFile(root, rel string) (string, error) {
 	if filepath.IsAbs(rel) {
 		return "", errors.New("absolute image path")
 	}
-	return filepath.Join(root, rel), nil
+	joined := filepath.Join(root, rel)
+	// Reject relative paths whose ".." segments escape the image root.
+	// filepath.Rel folds cleaned segments, so a leading ".." (as a whole path
+	// component) is the canonical "escaped the root" signal. Matching on
+	// "../<sep>" plus the lone ".." avoids false positives on legitimate
+	// filenames that merely begin with ".." (e.g. "..boot").
+	relToRoot, err := filepath.Rel(root, joined)
+	if err != nil {
+		return "", fmt.Errorf("image path: %w", err)
+	}
+	sep := string(filepath.Separator)
+	if relToRoot == ".." || strings.HasPrefix(relToRoot, ".."+sep) {
+		return "", errors.New("image path escapes root")
+	}
+	return joined, nil
 }
 
 func WrapSlotDenied(op, slot string) error {
